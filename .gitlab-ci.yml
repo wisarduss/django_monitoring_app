@@ -1,0 +1,16 @@
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+  script:
+    - pip install -r requirements.txt
+    - flake8 app/
+    - pytest tests/
+
+deploy:
+  stage: deploy
+  script:
+    - docker-compose up -d --build
+  when: on_success
